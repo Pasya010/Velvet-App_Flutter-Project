@@ -26,7 +26,7 @@ class _PopularProductScreenState extends State<PopularProductScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: GridView.builder(
               shrinkWrap: true,
-              itemCount: state.products.length,
+              itemCount: state.filteredProducts.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 16,
@@ -34,16 +34,15 @@ class _PopularProductScreenState extends State<PopularProductScreen> {
                 mainAxisExtent: 270,
               ),
               itemBuilder: (context, index) {
-                final product = state.products[index];
+                final product = state.filteredProducts[index];
 
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            DetailProductScreen(product: product)));
-                  },
-                  child: ProductWidget(product: product),
-                );
+                return ProductWidget(
+                    product: product,
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              DetailProductScreen(product: product)));
+                    });
               },
             ),
           );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 final List<Map<String, dynamic>> categories = [
-  {'icon': Icons.watch, 'text': 'Watches'},
-  {'icon': Icons.shopping_bag_outlined, 'text': 'Bags'},
+  {'icon': Icons.checkroom_outlined, 'text': 'Clothes'},
+  {'icon': Icons.phone_android_outlined, 'text': 'Electronics'},
   {'icon': Icons.brush_outlined, 'text': 'Beauty'},
   {'icon': Icons.checkroom_outlined, 'text': 'Clothing'},
   {'icon': Icons.gavel_sharp, 'text': 'Accessories'},

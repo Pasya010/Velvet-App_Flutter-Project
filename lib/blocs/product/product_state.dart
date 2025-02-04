@@ -8,8 +8,9 @@ class ProductLoading extends ProductState {}
 
 class ProductLoaded extends ProductState {
   final List<ProductModel> products;
+  final List<ProductModel> filteredProducts;
 
-  ProductLoaded({required this.products});
+  ProductLoaded({required this.products, required this.filteredProducts});
 }
 
 class ProductError extends ProductState {

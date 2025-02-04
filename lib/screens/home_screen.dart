@@ -4,7 +4,9 @@ import 'package:velvet_app/blocs/product/product_bloc.dart';
 import 'package:velvet_app/blocs/product/product_state.dart';
 import 'package:velvet_app/list/categories_list.dart';
 import 'package:velvet_app/screens/All%20Prodcut%20Screen/all_products_screen.dart';
+import 'package:velvet_app/screens/detail_product_screen.dart';
 import 'package:velvet_app/widgets/categories_widget.dart';
+import 'package:velvet_app/widgets/product_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -55,33 +57,57 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    Text(
-                      'See more',
-                      style: TextStyle(color: Colors.red, fontSize: 16),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => AllProductsScreen()));
+                      },
+                      child: Text(
+                        'See more',
+                        style: TextStyle(color: Colors.red, fontSize: 16),
+                      ),
                     ),
                   ],
                 ),
               ),
+
+              // Recommended Products
               BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
                 if (state is ProductLoading) {
                   return Center(child: CircularProgressIndicator());
                 }
                 if (state is ProductLoaded) {
+                  final recommendedProducts = state.products.take(5).toList();
+
                   return SizedBox(
-                    height: 200,
+                    height: 300,
                     child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: state.products.length,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: recommendedProducts.length,
                         itemBuilder: (context, index) {
                           final product = state.products[index];
 
-                          return;
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                                width: 170,
+                                child: ProductWidget(
+                                    product: product,
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailProductScreen(
+                                                      product: product)));
+                                    })),
+                          );
                         }),
                   );
                 }
                 return SizedBox.shrink();
               }),
+
+              //
             ],
           ),
         ),
@@ -140,8 +166,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Container promoSection() {
-    return Container(
+  SizedBox promoSection() {
+    return SizedBox(
       height: 210,
       width: 350,
       child: Stack(
