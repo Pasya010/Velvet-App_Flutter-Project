@@ -1,16 +1,12 @@
-# velvet_app
+# Velvet App : Marketplace App
+![Image](https://github.com/user-attachments/assets/26a8a315-3304-4b2c-8f55-1c3d173ad4a0)
 
-A new Flutter project.
+**Slicing UI Shopease - eCommerce Fashion Mobile App By Muhammad Ahrasya**
+## 📱 Features
+1. **Rest API Integration**:
+   - Using fakeapi.plazti.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🚀 Packages Used
+- **flutter_bloc**: Implemented state management using the BLoC pattern.
+- **Dio**: for the API.
+---
