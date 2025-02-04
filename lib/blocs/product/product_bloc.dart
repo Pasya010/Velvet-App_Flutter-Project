@@ -12,9 +12,22 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         emit(ProductLoading());
         try {
           final products = await repository.getProducts();
-          emit(ProductLoaded(products: products));
+          emit(ProductLoaded(products: products, filteredProducts: products));
         } catch (e) {
           emit(ProductError(message: e.toString()));
+        }
+      },
+    );
+
+    on<FilterProducts>(
+      (event, emit) async {
+        if (state is ProductLoaded) {
+          final currentState = state as ProductLoaded;
+          final filtered = currentState.products
+              .where((product) => product.category == event.category)
+              .toList();
+          emit(ProductLoaded(
+              products: currentState.products, filteredProducts: filtered));
         }
       },
     );

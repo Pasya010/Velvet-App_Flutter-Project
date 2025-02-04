@@ -4,6 +4,7 @@ class ProductModel {
   final double price;
   final String description;
   final List<dynamic> images;
+  final String category;
 
   ProductModel({
     required this.id,
@@ -11,6 +12,7 @@ class ProductModel {
     required this.price,
     required this.description,
     required this.images,
+    required this.category,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class ProductModel {
       price: (json['price'] as num).toDouble(),
       description: json['description'],
       images: List<dynamic>.from(json['images']),
+      category: json['category']['name'],
     );
   }
 }
