@@ -34,10 +34,10 @@ class MyApp extends StatelessWidget {
       home: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
         if (state is Authenticated) {
           return PagesNavigator();
-        } else if (state is AuthLoading) {
-          return Scaffold(body: Center(child: CircularProgressIndicator()));
-        } else {
+        } else if (state is UnAuthenticated) {
           return LoginScreen();
+        } else {
+          return Scaffold(body: Center(child: CircularProgressIndicator()));
         }
       }),
     );

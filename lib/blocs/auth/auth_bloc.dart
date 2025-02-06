@@ -30,6 +30,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       },
     );
+
+    on<RegisterRequested>(
+      (event, emit) async {
+        emit(AuthLoading());
+        try {
+          final user = await repository.register(
+              event.name, event.email, event.password);
+
+          // Save Token
+          if (user.token.isNotEmpty) {
+            final userProfile = await repository.getUserProfile(user.token);
+            await StorageService.saveToken(user.token);
+
+            emit(Authenticated(user: userProfile));
+          } else {
+            emit(AuthError(message: 'Token Error'));
+          }
+        } catch (e) {
+          emit(AuthError(message: 'Error: $e'));
+        }
+      },
+    );
+
     on<LogoutRequested>(
       (event, emit) async {
         await StorageService.removeToken();
