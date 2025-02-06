@@ -22,6 +22,26 @@ class AuthRepository {
     }
   }
 
+  // Register Method
+  Future<UserModel> register(String name, String email, String password) async {
+    try {
+      final response = await _dio.post('/users', data: {
+        'name': name,
+        'email': email,
+        'password': password,
+        'avatar': 'https://i.pravatar.cc/300' // Avatar default
+      });
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return await login(email, password);
+      } else {
+        throw Exception('Failed to register');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+
   // method to get the user profile
   Future<UserModel> getUserProfile(String token) async {
     try {

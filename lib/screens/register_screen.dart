@@ -4,23 +4,26 @@ import 'package:lottie/lottie.dart';
 import 'package:velvet_app/blocs/auth/auth_bloc.dart';
 import 'package:velvet_app/blocs/auth/auth_event.dart';
 import 'package:velvet_app/blocs/auth/auth_state.dart';
-import 'package:velvet_app/screens/register_screen.dart';
+import 'package:velvet_app/screens/login_screen.dart';
 import 'package:velvet_app/utils/pages_navigator.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController nameContoller = TextEditingController();
+
   final TextEditingController emailContoller = TextEditingController();
 
   final TextEditingController passwordContoller = TextEditingController();
 
   @override
   void dispose() {
+    nameContoller.dispose();
     emailContoller.dispose();
     passwordContoller.dispose();
     super.dispose();
@@ -43,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   Container(
                     padding: EdgeInsets.all(12.0),
-                    height: 400,
+                    height: 460,
                     width: 300,
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -51,14 +54,31 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        // Login
+                        // Register
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 40),
-                          child: Text('Login',
+                          child: Text('Register',
                               style: TextStyle(
                                   color: const Color.fromARGB(255, 161, 48, 40),
                                   fontSize: 35)),
                         ),
+
+                        // name
+                        TextField(
+                          controller: nameContoller,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(20)),
+                              hintText: 'Name',
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(20),
+                              )),
+                        ),
+
+                        SizedBox(height: 15),
 
                         // email
                         TextField(
@@ -116,20 +136,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                 foregroundColor: Colors.white,
                               ),
                               onPressed: () {
-                                if (emailContoller.text.isEmpty ||
+                                if (nameContoller.text.isEmpty ||
+                                    emailContoller.text.isEmpty ||
                                     passwordContoller.text.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           content: Text(
                                               'Please enter name, email, and password')));
                                 } else {
-                                  context.read<AuthBloc>().add(LoginRequsted(
+                                  context
+                                      .read<AuthBloc>()
+                                      .add(RegisterRequested(
+                                        name: nameContoller.text,
                                         email: emailContoller.text,
                                         password: passwordContoller.text,
                                       ));
                                 }
                               },
-                              child: Text('Login'));
+                              child: Text('Register'));
                         }),
 
                         // Go to register
@@ -138,16 +162,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('Not a member yet? '),
+                              Text('Already a member yet? '),
                               GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              RegisterScreen()));
+                                          builder: (context) => LoginScreen()));
                                 },
                                 child: Text(
-                                  'Register Now',
+                                  'Login Now',
                                   style: TextStyle(color: Colors.blue),
                                 ),
                               ),
